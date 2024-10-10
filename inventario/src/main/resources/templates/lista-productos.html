@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{master.html}">
+<head>
+  <meta charset="UTF-8">
+  <title>Todos los productos</title>
+</head>
+<body>
+
+<div layout:fragment="contenido_dinamico">
+
+  <div class="container mt-5">
+    <h3 class="text-primary">Todos los productos</h3>
+
+
+    <div class="row mt-5">
+      <div th:each="producto : ${productos}" th:object="${producto}" class="col-md-4 col-lg-3 mb-3">
+
+        <div class="card shadow h-100">
+          <img th:src="@{/media/{rutaImagen}(rutaImagen=*{rutaImagen})}" class="card-img-top"
+               th:alt="*{nombre}"
+               style="height: 250px; object-fit: cover;">
+          <div class="card-body">
+            <h5 class="card-title">[[*{nombre}]]</h5>
+            <p class="card-text">[[*{descripcion}]]</p>
+          </div>
+          <div class="card-footer">
+            <div class="text-danger fw-bold">
+              S/[[*{#numbers.formatDecimal(precio, 1,'COMMA',2,'POINT')}]]
+            </div>
+            <div class="d-grid">
+              <a th:href="@{/productos/{id}(id=*{id})}" class="btn btn-primary">
+                Ver detalles
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-center mt-3">
+      <nav>
+        <div sd:pagination-summary="">info</div>
+
+        <ul class="pagination mt-3" sd:pagination="full">
+        </ul>
+      </nav>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

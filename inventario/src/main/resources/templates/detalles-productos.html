@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{master.html}">
+<head>
+  <meta charset="UTF-8">
+  <title>[[${producto.nombre}]]</title>
+</head>
+<body>
+
+<div layout:fragment="contenido_dinamico">
+
+  <div class="container my-5" th:object="${producto}">
+
+    <h3 class="text-primary mb-3">[[*{nombre}]]</h3>
+
+    <div class="row">
+
+      <div class="col-md-6">
+        <img th:src="@{/media/{rutaImagen}(rutaImagen=*{rutaImagen})}" class="card-img-top"
+             th:alt="*{nombre}">
+      </div>
+
+      <div class="col-md-6">
+        <p>
+          [[*{descripcion}]]
+        </p>
+
+        <p>
+          El producto se entrega con:<br>
+          [[*{complemento}]]
+        </p>
+
+        <p>
+          S/[[*{#numbers.formatDecimal(precio, 1,'COMMA',2,'POINT')}]]
+        </p>
+
+        <!--<button class="btn btn-success btn-lg">Comprar</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

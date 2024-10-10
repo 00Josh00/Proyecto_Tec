@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{master.html}"
+>
+<head>
+  <meta charset="UTF-8">
+  <title>Inicio de sesión</title>
+</head>
+<body>
+
+<div layout:fragment="contenido_dinamico">
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6 col-lg-4">
+        <div class="bg-white shadow rounded p-5">
+          <h3>Inicio de sesión</h3>
+
+          <div th:if="${param.error}" class="alert alert-danger my-3">
+            El email o la contraseña son incorrectas
+          </div>
+
+          <div th:if="${param.registroExitoso}" class="alert alert-success my-3">
+            Te has registrado correctamente
+          </div>
+
+          <form th:action="@{''}" method="post" class="mt-5">
+            <div class="mb-2">
+              <label>Email</label>
+              <input type="email" id="email" name="username" placeholder="Email" class="form-control">
+            </div>
+
+            <div class="mb-2">
+              <label>Contraseña</label>
+              <input type="password" id="password" name="password" placeholder="Contraseña" class="form-control">
+            </div>
+
+            <button class="btn btn-primary">
+              Ingresar
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{master.html}"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Registro de nuevo usuario</title>
+</head>
+<body>
+
+<div layout:fragment="contenido_dinamico">
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-4">
+                <div class="bg-white shadow rounded p-5">
+                    <h3>Registro de Usuario</h3>
+                    <form th:action="@{''}" method="post" th:object="${usuario}">
+                        <div class="mb-2">
+                            <label>Nombre</label>
+                            <input type="text" id="nombre" name="nombre"
+                                   th:field="*{nombre}" class="form-control" th:errorClass="is-invalid">
+                            <div th:errors="*{nombre}" th:if="${#fields.hasErrors('nombre')}" class="invalid-feedback">
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <label>Apellidos</label>
+                            <input type="text" id="apellidos" name="apellidos"
+                                   th:field="*{apellidos}" class="form-control" th:errorClass="is-invalid">
+                            <div th:errors="*{apellidos}" th:if="${#fields.hasErrors('apellidos')}" class="invalid-feedback">
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <label>Email</label>
+                            <input type="email" id="email" name="email"
+                                   th:field="*{email}" class="form-control" th:errorClass="is-invalid">
+                            <div th:errors="*{email}" th:if="${#fields.hasErrors('email')}" class="invalid-feedback">
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <label>Contraseña</label>
+                            <input type="password" id="password1" name="password1"
+                                   th:field="*{password1}" class="form-control" th:errorClass="is-invalid">
+                            <div th:errors="*{password1}" th:if="${#fields.hasErrors('password1')}" class="invalid-feedback">
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <label>Repite contraseña</label>
+                            <input type="password" id="password2" name="password2"
+                                   th:field="*{password2}" class="form-control" th:errorClass="is-invalid">
+                            <div th:errors="*{password2}" th:if="${#fields.hasErrors('password2')}" class="invalid-feedback">
+                            </div>
+                        </div>
+
+                        <div class="text-end mt-3">
+                            <a href="/login" class="btn btn-ligth">Cancelar</a>
+                            <button class="btn btn-primary">Regístrame</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
