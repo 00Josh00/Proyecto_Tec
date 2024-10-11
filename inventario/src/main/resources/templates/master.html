@@ -23,7 +23,7 @@
     <div layout:fragment="styles" th:remove="tag"></div>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-navbar">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
         <button class="navbar-toggler" type="button"
                 data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03"
@@ -45,7 +45,7 @@
                 <!-- <li class="nav-item"><a class="nav-link" sec:authorize="isAuthenticated()" href="/cambiarPassword">Cambiar contraseña</a></li> -->
             </ul>
             <div sec:authorize="!isAuthenticated()">
-                <a class="btn btn-outline-primary" href="/login">
+                <a class="btn btn-outline-success" href="/login">
                     Iniciar sesión
                 </a>
                 <a class="btn btn-primary" href="/registro">Regístrate</a>
