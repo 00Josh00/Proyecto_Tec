@@ -12,7 +12,7 @@ public class Producto {
 
     @Id //primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY) //serial auto incremental
-    @Column(name = "idproducto") // que el nombre de columna en la tabla sea idcurso
+    @Column(name = "idproducto") // que el nombre de columna en la tabla sea idproducto
     private Integer id;
 
     @NotBlank //anotacion de validacion

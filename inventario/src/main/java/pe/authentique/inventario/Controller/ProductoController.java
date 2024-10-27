@@ -18,7 +18,7 @@ import java.util.List;
 @Controller
 public class ProductoController {
     @Autowired
-    private ProductoRepository productoRepository; //objeto de acceso a datos de la tabla Curso me permite CRUD
+    private ProductoRepository productoRepository; //objeto de acceso a datos de la tabla Producto me permite CRUD
 
     @GetMapping("")
     public String index(Model model)

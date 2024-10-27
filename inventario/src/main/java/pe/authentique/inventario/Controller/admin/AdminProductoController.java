@@ -14,7 +14,6 @@ import pe.authentique.inventario.Repository.ProductoRepository;
 import pe.authentique.inventario.model.Producto;
 import pe.authentique.inventario.service.FileSystemStorateService;
 
-
 @Controller
 @RequestMapping("/admin/productos")
 public class AdminProductoController {
@@ -90,10 +89,10 @@ public class AdminProductoController {
     @GetMapping("/editar/{id}")
     String editar(Model model, @PathVariable Integer id)
     {
-        //1. Obtener los datos de la base de datos por el ID del Curso
+        //1. Obtener los datos de la base de datos por el ID del Producto
         Producto producto= productoRepository.getReferenceById(id);
 
-        //2. Agregar como atributo el curso al modelo
+        //2. Agregar como atributo el producto al modelo
         model.addAttribute("producto", producto);
 
         //3. Enviar a la vista (HTML) el model
@@ -107,7 +106,7 @@ public class AdminProductoController {
     String actualizar(Model model, @PathVariable Integer id,@Validated Producto producto, BindingResult br, RedirectAttributes ra)
     {
         //Validaciones
-        if (br.hasErrors()) //valida si existe errores en las validaciones de los campos de Curso
+        if (br.hasErrors()) //valida si existe errores en las validaciones de los campos de Producto
         {
             model.addAttribute("producto", producto);
             return "admin/editar";
@@ -116,7 +115,7 @@ public class AdminProductoController {
         //1. Obtenemos el Producto de la base datos para editarlo
         Producto productoFromDB = productoRepository.getReferenceById(id);
 
-        //2. Setear o actualizar los campos con los nuevos valores del curso
+        //2. Setear o actualizar los campos con los nuevos valores del producto
         if (!producto.getImagen().isEmpty()){
             String rutaImagen = fileSystemStorateService.store(producto.getImagen());
             productoFromDB.setRutaImagen(rutaImagen);
@@ -132,7 +131,7 @@ public class AdminProductoController {
         //4. Creo un mensaje flash
         ra.addFlashAttribute("msgExito", "El producto se ha actualizado con éxito!");
 
-        //5. redirecdionamos al pagina de inicio de cursos
+        //5. redirecdionamos al pagina de inicio de productos
         return "redirect:/admin/productos";
     }
 
@@ -145,7 +144,7 @@ public class AdminProductoController {
         //2. Creo un mensaje flash
         ra.addFlashAttribute("msgExito", "El producto se ha eliminado con éxito!");
 
-        //3. redireccionamos a la página de inicio de cursos
+        //3. redireccionamos a la página de inicio de productos
         return "redirect:/admin/productos";
     }
 }
