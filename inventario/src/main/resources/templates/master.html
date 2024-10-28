@@ -42,7 +42,10 @@
                     <a class="nav-link" sec:authorize="hasRole('ROLE_ADMIN')"
                        href="/admin/productos">Admnistración</a>
                 </li>
-                <!-- <li class="nav-item"><a class="nav-link" sec:authorize="isAuthenticated()" href="/cambiarPassword">Cambiar contraseña</a></li> -->
+                <li class="nav-item">
+                    <a class="nav-link" sec:authorize="hasRole('ROLE_ADMIN')"
+                       href="/admin/entradasInventario">Entrada - Inventario</a>
+                </li>
             </ul>
             <div sec:authorize="!isAuthenticated()">
                 <a class="btn btn-outline-success" href="/login">
