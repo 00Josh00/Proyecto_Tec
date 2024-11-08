@@ -20,8 +20,7 @@ public class MediaController {
     private FileSystemStorateService fileSystemStorateService;
 
     @GetMapping("/{nombreArchivo}")
-    ResponseEntity<Resource> getMedia(@PathVariable String nombreArchivo) throws Exception
-    {
+    ResponseEntity<Resource> getMedia(@PathVariable String nombreArchivo) throws Exception {
         Resource resource = fileSystemStorateService.loadAsResource(nombreArchivo);
         String contentType = Files.probeContentType(resource.getFile().toPath());
 

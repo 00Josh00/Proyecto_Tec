@@ -31,8 +31,7 @@ public class AdminEntradaInventarioController {
     // Listar todas las entradas de inventario
     @GetMapping("")
     String index(Model model,
-                 @PageableDefault(size = 10, sort = "fechaCreacion") Pageable pageable)
-    {
+                 @PageableDefault(size = 10, sort = "fechaCreacion") Pageable pageable) {
         Page<EntradaInventario> entradas = entradaInventarioRepository.findAll(pageable);
         model.addAttribute("entradas", entradas);
         return "admin/entradasInventario/index";
@@ -58,8 +57,7 @@ public class AdminEntradaInventarioController {
     String registrar(@Validated EntradaInventario entradaInventario,
                      BindingResult br,
                      Model model,
-                     RedirectAttributes ra)
-    {
+                     RedirectAttributes ra) {
         if (br.hasErrors()) {
             model.addAttribute("entradaInventario", entradaInventario);
             model.addAttribute("productos", productoRepository.findAll());
@@ -77,8 +75,7 @@ public class AdminEntradaInventarioController {
     }
 
     @PostMapping("/eliminar/{id}")
-    String eliminar(@PathVariable Integer id, RedirectAttributes ra)
-    {
+    String eliminar(@PathVariable Integer id, RedirectAttributes ra) {
         //1. eliminamos el curso por su ID, utilizando el repository
         entradaInventarioRepository.deleteById(id);
 

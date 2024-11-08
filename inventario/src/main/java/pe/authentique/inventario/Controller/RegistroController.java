@@ -21,17 +21,14 @@ public class RegistroController {
     private PasswordEncoder passwordEncoder;
 
     @GetMapping("/registro")
-    public String index(Model model)
-    {
+    public String index(Model model) {
         model.addAttribute("usuario", new Usuario());
         return "registro";
     }
 
     @PostMapping("/registro")
-    public String crear(Model model, @Validated Usuario usuario, BindingResult br, RedirectAttributes ra)
-    {
-        if (br.hasErrors())
-        {
+    public String crear(Model model, @Validated Usuario usuario, BindingResult br, RedirectAttributes ra) {
+        if (br.hasErrors()) {
             model.addAttribute("usuario", usuario);
             return "registro";
         }
@@ -41,19 +38,16 @@ public class RegistroController {
         String email = usuario.getEmail();
         boolean usuarioExiste = usuarioRepository.existsByEmail(email);
 
-        if (usuarioExiste)
-        {
+        if (usuarioExiste) {
             br.rejectValue("email", "EmailAlredyExists");
         }
 
         //Validar las contraseñas 1 y 2 sean iguales
-        if(!usuario.getPassword1().equals(usuario.getPassword2()))
-        {
+        if (!usuario.getPassword1().equals(usuario.getPassword2())) {
             br.rejectValue("password1", "PasswordNotEquals");
         }
 
-        if (br.hasErrors())
-        {
+        if (br.hasErrors()) {
             model.addAttribute("usuario", usuario);
             return "registro";
         }

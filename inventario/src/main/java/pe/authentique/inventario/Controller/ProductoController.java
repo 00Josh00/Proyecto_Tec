@@ -21,8 +21,7 @@ public class ProductoController {
     private ProductoRepository productoRepository; //objeto de acceso a datos de la tabla Producto me permite CRUD
 
     @GetMapping("")
-    public String index(Model model)
-    {
+    public String index(Model model) {
         //Obtener los ultimos 8 cursos
         List<Producto> ultimosProductos = productoRepository.findTop3ByOrderByFechaCreacionDesc();
         model.addAttribute("ultimosProductos", ultimosProductos);
@@ -30,18 +29,16 @@ public class ProductoController {
     }
 
     @GetMapping("/productos")
-    String getProductos(Model model, @PageableDefault(size = 9, sort = "nombre")Pageable pageable)
-    {
+    String getProductos(Model model, @PageableDefault(size = 9, sort = "nombre") Pageable pageable) {
         Page<Producto> productos = productoRepository.findAll(pageable);
         model.addAttribute("productos", productos);
         return "lista-productos";
     }
 
     @GetMapping("/productos/{id}")
-    String getProducto(@PathVariable Integer id, Model model)
-    {
+    String getProducto(@PathVariable Integer id, Model model) {
         Producto producto = productoRepository.getReferenceById(id);
         model.addAttribute("producto", producto);
-        return  "detalles-productos";
+        return "detalles-productos";
     }
 }

@@ -27,17 +27,13 @@ public class AdminProductoController {
     @GetMapping("")
     String index(Model model,
                  @PageableDefault(size = 5, sort = "nombre") Pageable pageable,
-                 @RequestParam(required = false) String nombre)
-    {
+                 @RequestParam(required = false) String nombre) {
         Page<Producto> productos;
 
         //Validar si el campo de titulo osea el filtro tiene valor o no
-        if (nombre != null && !nombre.trim().isEmpty())
-        {
+        if (nombre != null && !nombre.trim().isEmpty()) {
             productos = productoRepository.findByNombreContaining(nombre, pageable);
-        }
-        else
-        {
+        } else {
             productos = productoRepository.findAll(pageable);
         }
         model.addAttribute("productos", productos);
@@ -45,8 +41,7 @@ public class AdminProductoController {
     }
 
     @GetMapping("/nuevo")
-    String nuevo(Model model)
-    {
+    String nuevo(Model model) {
         model.addAttribute("producto", new Producto());
         return "admin/nuevo";
     }
@@ -55,10 +50,9 @@ public class AdminProductoController {
     String registrar(@Validated Producto producto,
                      BindingResult br,
                      Model model,
-                     RedirectAttributes ra)
-    {
+                     RedirectAttributes ra) {
         //Validaciones
-        if (producto.getImagen().isEmpty()){
+        if (producto.getImagen().isEmpty()) {
             br.rejectValue("imagen", "MultipartNotEmpty");
         }
 
@@ -87,10 +81,9 @@ public class AdminProductoController {
     //Ruta URL: /editar/{id}
 
     @GetMapping("/editar/{id}")
-    String editar(Model model, @PathVariable Integer id)
-    {
+    String editar(Model model, @PathVariable Integer id) {
         //1. Obtener los datos de la base de datos por el ID del Producto
-        Producto producto= productoRepository.getReferenceById(id);
+        Producto producto = productoRepository.getReferenceById(id);
 
         //2. Agregar como atributo el producto al modelo
         model.addAttribute("producto", producto);
@@ -103,8 +96,7 @@ public class AdminProductoController {
     //RUta o URL: editar/{id}
 
     @PostMapping("/editar/{id}")
-    String actualizar(Model model, @PathVariable Integer id,@Validated Producto producto, BindingResult br, RedirectAttributes ra)
-    {
+    String actualizar(Model model, @PathVariable Integer id, @Validated Producto producto, BindingResult br, RedirectAttributes ra) {
         //Validaciones
         if (br.hasErrors()) //valida si existe errores en las validaciones de los campos de Producto
         {
@@ -116,7 +108,7 @@ public class AdminProductoController {
         Producto productoFromDB = productoRepository.getReferenceById(id);
 
         //2. Setear o actualizar los campos con los nuevos valores del producto
-        if (!producto.getImagen().isEmpty()){
+        if (!producto.getImagen().isEmpty()) {
             String rutaImagen = fileSystemStorateService.store(producto.getImagen());
             productoFromDB.setRutaImagen(rutaImagen);
         }
@@ -136,8 +128,7 @@ public class AdminProductoController {
     }
 
     @PostMapping("/eliminar/{id}")
-    String eliminar(@PathVariable Integer id, RedirectAttributes ra)
-    {
+    String eliminar(@PathVariable Integer id, RedirectAttributes ra) {
         //1. eliminamos el curso por su ID, utilizando el repository
         productoRepository.deleteById(id);
 

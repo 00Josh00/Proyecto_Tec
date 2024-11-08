@@ -21,7 +21,7 @@ public class Usuario {
     @NotBlank
     private String apellidos;
 
-    @Column(name="nom_completo")
+    @Column(name = "nom_completo")
     private String nombreCompleto;
 
     @NotEmpty
@@ -38,15 +38,15 @@ public class Usuario {
     @NotBlank
     @Transient //que no se persistemte, es decir no crea la columna en la tabla en db
     private String password2;
-    public enum Rol{
+
+    public enum Rol {
         ADMIN,
         ESTUDIANTE
     }
 
     @PrePersist
     @PreUpdate
-    void asignarNombreCompleto()
-    {
+    void asignarNombreCompleto() {
         nombreCompleto = nombre + " " + apellidos;
     }
 }
