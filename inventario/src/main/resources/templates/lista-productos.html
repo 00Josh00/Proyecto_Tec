@@ -1,57 +1,62 @@
 <!DOCTYPE html>
-<html lang="es"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{master.html}">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{master.html}">
 <head>
-  <meta charset="UTF-8">
-  <title>Todos los productos</title>
+  <link th:href="@{/assets/css/templatemo.css}" rel="stylesheet">
+  <link th:href="@{/assets/css/custom.css}" rel="stylesheet">
+  <link th:href="@{/css/master.css}" rel="stylesheet">
 </head>
+
 <body>
 
 <div layout:fragment="contenido_dinamico">
 
-  <div class="container mt-5">
-    <h3 class="text-primary">Todos los productos</h3>
-
-
-    <div class="row mt-5">
-      <div th:each="producto : ${productos}" th:object="${producto}" class="col-md-4 col-lg-3 mb-3">
-
-        <div class="card shadow h-100">
-          <img th:src="@{/media/{rutaImagen}(rutaImagen=*{rutaImagen})}" class="card-img-top"
-               th:alt="*{nombre}"
-               style="height: 250px; object-fit: cover;">
-          <div class="card-body">
-            <h5 class="card-title">[[*{nombre}]]</h5>
-            <p class="card-text">[[*{descripcion}]]</p>
-          </div>
-          <div class="card-footer">
-            <div class="text-danger fw-bold">
-              S/[[*{#numbers.formatDecimal(precio, 1,'COMMA',2,'POINT')}]]
-            </div>
-            <div class="d-grid">
-              <a th:href="@{/productos/{id}(id=*{id})}" class="btn btn-primary">
-                Ver detalles
-              </a>
+  <div class="container py-5">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="row">
+          <div th:each="producto : ${productos}" th:object="${producto}" class="col-md-4 mb-4">
+            <div class="card mb-4 product-wap rounded-0">
+              <div class="card rounded-0">
+                <img th:src="@{/media/{rutaImagen}(rutaImagen=*{rutaImagen})}" class="card-img rounded-0 img-fluid custom-img-size" th:alt="*{nombre}">
+              </div>
+              <div class="card-body">
+                <a th:href="@{/productos/{id}(id=*{id})}" class="h3 text-decoration-none">[[*{nombre}]]</a>
+                <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
+                  <li> </li>
+                </ul>
+                <p class="text-center mb-0">S/[[*{#numbers.formatDecimal(precio, 1,'COMMA',2,'POINT')}]]</p>
+              </div>
             </div>
           </div>
         </div>
 
+        <!-- Paginación -->
+        <div class="row">
+          <ul class="pagination pagination-lg justify-content-end">
+            <li th:classappend="${productos.hasPrevious()} ? 'page-item' : 'page-item disabled'">
+              <a th:href="@{/productos(page=${productos.number - 1})}" class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark">Anterior</a>
+            </li>
+
+            <li th:each="i : ${#numbers.sequence(0, productos.totalPages - 1)}" th:classappend="${productos.number == i} ? 'page-item active' : 'page-item'">
+              <a th:href="@{/productos(page=${i})}" class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark" th:text="${i + 1}"></a>
+            </li>
+
+            <li th:classappend="${productos.hasNext()} ? 'page-item' : 'page-item disabled'">
+              <a th:href="@{/productos(page=${productos.number + 1})}" class="page-link rounded-0 shadow-sm border-top-0 border-left-0 text-dark">Siguiente</a>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
-
-    <div class="d-flex justify-content-center mt-3">
-      <nav>
-        <div sd:pagination-summary="">info</div>
-
-        <ul class="pagination mt-3" sd:pagination="full">
-        </ul>
-      </nav>
-    </div>
-
   </div>
+
 </div>
+
+<script th:src="@{/assets/js/jquery-1.11.0.min.js}"></script>
+<script th:src="@{/assets/js/jquery-migrate-1.2.1.min.js}"></script>
+<script th:src="@{/assets/js/templatemo.js}"></script>
+<script th:src="@{/assets/js/custom.js}"></script>
+
 
 </body>
 </html>

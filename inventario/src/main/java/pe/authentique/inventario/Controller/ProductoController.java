@@ -24,13 +24,13 @@ public class ProductoController {
     public String index(Model model)
     {
         //Obtener los ultimos 8 cursos
-        List<Producto> ultimosProductos = productoRepository.findTop8ByOrderByFechaCreacionDesc();
+        List<Producto> ultimosProductos = productoRepository.findTop3ByOrderByFechaCreacionDesc();
         model.addAttribute("ultimosProductos", ultimosProductos);
         return "index";
     }
 
     @GetMapping("/productos")
-    String getProductos(Model model, @PageableDefault(size = 8, sort = "nombre")Pageable pageable)
+    String getProductos(Model model, @PageableDefault(size = 9, sort = "nombre")Pageable pageable)
     {
         Page<Producto> productos = productoRepository.findAll(pageable);
         model.addAttribute("productos", productos);

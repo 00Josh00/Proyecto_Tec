@@ -1,0 +1,8 @@
+/*
+Custom Css
+*/
+.custom-img-size {
+  width: 412px;
+  height: 412px;
+  object-fit: cover; /* Para asegurar que la imagen se ajuste sin deformarse */
+}

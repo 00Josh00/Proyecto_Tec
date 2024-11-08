@@ -1,0 +1,132 @@
+      .banner {
+          background: url(/banner-logo.jpg) center no-repeat;
+          min-height: 900px;
+          position: relative;
+          background-color: #fef7f1;
+      }
+      .banner .overlay {
+          background: rgba(0,0,0,0.25);
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          z-index: -1;
+      }
+      .title-section{
+        color: #c19417;
+        font-size: 14px!important;
+        text-align: center;
+      }
+      .parr-section{
+        color: #fff;
+        font-size: 16px!important;
+        text-align: left;
+      }
+      .parr-section-col{
+        font-size: 16px!important;
+        text-align: left;
+      }
+      .parr-section-card{
+        color: #000;
+        font-size: 16px;
+        text-transform: uppercase;
+        text-decoration: none;
+        transition: color 0.3s ease;
+        cursor: pointer;
+      }
+      .parr-section-card:hover{
+        color: #c19417;
+      }
+      .price-section{
+        color: #000!important;
+        text-align: left;
+        font-size: 13px!important;
+        font-weight: 600;
+      }
+      .description-section{
+        color: #000;
+        font-size: 32px!important;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .description-sectionW{
+        color: #fff;
+        font-size: 54px!important;
+        text-align: left;
+        margin-bottom: 20px;
+      }
+      .link-section{
+        color: #000;
+        font-size: 13px!important;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+      .link-section:hover{
+        color: #000;
+      }
+      .first-section{
+        max-width: 700px;
+        padding: 100px 0;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .second-section{
+        padding: 100px 0;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .background-section{
+        background-image: url(/back-sect2.jpg);
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        padding: 350px 0;
+        background-attachment: fixed;
+      }
+      .btn-sectionBK{
+        display: flex;
+        text-transform: uppercase;
+        text-align: center;
+        font-size: 16px;
+        font-weight: 400;
+        color: #fff;
+        border: 2px solid #fff;
+        padding: 20px 10px;
+        margin-top: 50px;
+        transition: 0.5s all ease;
+        width: 260px;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+      }
+      .btn-sectionBK:hover{
+        color: #fff;
+      }
+      .btn-section{
+        display: flex;
+        text-transform: uppercase;
+        text-align: center;
+        font-size: 16px;
+        font-weight: 400;
+        color: #fff;
+        padding: 15px 5px;
+        margin-top: 40px;
+        transition: 0.5s all ease;
+        width: 160px;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        background-color: #000;
+      }
+      .btn-section:hover{
+        background-color: #c19417;
+        color: #fff;
+      }
+      .col-section{
+        text-align: left !important;
+        color: #000 !important;
+        display: flex;
+        align-content: center;
+        flex-wrap: wrap;
+      }

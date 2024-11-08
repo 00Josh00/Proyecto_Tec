@@ -15,6 +15,9 @@ import pe.authentique.inventario.Repository.ProductoRepository;
 import pe.authentique.inventario.model.EntradaInventario;
 import pe.authentique.inventario.model.Producto;
 
+import java.util.Comparator;
+import java.util.List;
+
 @Controller
 @RequestMapping("/admin/entradasInventario")
 public class AdminEntradaInventarioController {
@@ -37,10 +40,16 @@ public class AdminEntradaInventarioController {
 
     // Mostrar formulario para registrar una nueva entrada de inventario
     @GetMapping("/nueva")
-    String nueva(Model model)
-    {
-        model.addAttribute("entradaInventario", new EntradaInventario());
-        model.addAttribute("productos", productoRepository.findAll());
+    public String mostrarFormulario(Model model) {
+        List<Producto> productos = productoRepository.findAll();
+        productos.sort(Comparator.comparing(Producto::getNombre));
+
+        // Crear una nueva instancia de EntradaInventario con producto nulo
+        EntradaInventario entradaInventario = new EntradaInventario();
+        entradaInventario.setProducto(null); // Asegura que no haya un producto seleccionado por defecto
+
+        model.addAttribute("productos", productos);
+        model.addAttribute("entradaInventario", entradaInventario);
         return "admin/entradasInventario/nueva";
     }
 
