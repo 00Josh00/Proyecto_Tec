@@ -1,62 +1,65 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{master.html}">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{master.html}">
 <head>
-  <link th:href="@{/assets/css/templatemo.css}" rel="stylesheet">
-  <link th:href="@{/assets/css/custom.css}" rel="stylesheet">
-  <link th:href="@{/css/master.css}" rel="stylesheet">
+    <link th:href="@{/css/estilos.css}" rel="stylesheet">
+    <link th:href="@{/assets/css/custom.css}" rel="stylesheet">
+
 </head>
 
 <body>
 
 <div layout:fragment="contenido_dinamico">
 
-  <div class="container py-5">
-    <div class="row">
-      <div class="col-lg-12">
+    <div class="container py-5">
         <div class="row">
-          <div th:each="producto : ${productos}" th:object="${producto}" class="col-md-4 mb-4">
-            <div class="card mb-4 product-wap rounded-0">
-              <div class="card rounded-0">
-                <img th:src="@{/media/{rutaImagen}(rutaImagen=*{rutaImagen})}" class="card-img rounded-0 img-fluid custom-img-size" th:alt="*{nombre}">
-              </div>
-              <div class="card-body">
-                <a th:href="@{/productos/{id}(id=*{id})}" class="h3 text-decoration-none">[[*{nombre}]]</a>
-                <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                  <li> </li>
-                </ul>
-                <p class="text-center mb-0">S/[[*{#numbers.formatDecimal(precio, 1,'COMMA',2,'POINT')}]]</p>
-              </div>
+            <div class="col-lg-12">
+                <div class="row">
+                    <div th:each="producto : ${productos}" th:object="${producto}" class="col-md-4 mb-4">
+                        <div class="card mb-4 product-wap rounded-0">
+                            <div class="card rounded-0">
+                                <img th:src="@{/media/{rutaImagen}(rutaImagen=*{rutaImagen})}"
+                                     class="card-img rounded-0 img-fluid custom-img-size" th:alt="*{nombre}">
+                            </div>
+                            <div class="card-body">
+                                <a th:href="@{/productos/{id}(id=*{id})}" class="h3 text-decoration-none product-name">
+                                    [[*{nombre}]]
+                                </a>
+                                <ul class="w-100 list-unstyled d-flex justify-content-between mb-0 short-font parr-section-card">
+                                    <li></li>
+                                </ul>
+                                <p class="text-center mb-0">S/[[*{#numbers.formatDecimal(precio,1,'COMMA',2,'POINT')}]]</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paginación -->
+                <div class="row">
+                    <ul class="pagination pagination-lg justify-content-end">
+                        <li th:classappend="${productos.hasPrevious()} ? 'page-item' : 'page-item disabled'">
+                            <a th:href="@{/productos(page=${productos.number - 1})}"
+                               class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark">Anterior</a>
+                        </li>
+
+                        <li th:each="i : ${#numbers.sequence(0, productos.totalPages - 1)}"
+                            th:classappend="${productos.number == i} ? 'page-item active' : 'page-item'">
+                            <a th:href="@{/productos(page=${i})}"
+                               class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark"
+                               th:text="${i + 1}"></a>
+                        </li>
+
+                        <li th:classappend="${productos.hasNext()} ? 'page-item' : 'page-item disabled'">
+                            <a th:href="@{/productos(page=${productos.number + 1})}"
+                               class="page-link rounded-0 shadow-sm border-top-0 border-left-0 text-dark">Siguiente</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-          </div>
         </div>
-
-        <!-- Paginación -->
-        <div class="row">
-          <ul class="pagination pagination-lg justify-content-end">
-            <li th:classappend="${productos.hasPrevious()} ? 'page-item' : 'page-item disabled'">
-              <a th:href="@{/productos(page=${productos.number - 1})}" class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark">Anterior</a>
-            </li>
-
-            <li th:each="i : ${#numbers.sequence(0, productos.totalPages - 1)}" th:classappend="${productos.number == i} ? 'page-item active' : 'page-item'">
-              <a th:href="@{/productos(page=${i})}" class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark" th:text="${i + 1}"></a>
-            </li>
-
-            <li th:classappend="${productos.hasNext()} ? 'page-item' : 'page-item disabled'">
-              <a th:href="@{/productos(page=${productos.number + 1})}" class="page-link rounded-0 shadow-sm border-top-0 border-left-0 text-dark">Siguiente</a>
-            </li>
-          </ul>
-        </div>
-      </div>
     </div>
-  </div>
 
 </div>
-
-<script th:src="@{/assets/js/jquery-1.11.0.min.js}"></script>
-<script th:src="@{/assets/js/jquery-migrate-1.2.1.min.js}"></script>
-<script th:src="@{/assets/js/templatemo.js}"></script>
-<script th:src="@{/assets/js/custom.js}"></script>
-
 
 </body>
 </html>
