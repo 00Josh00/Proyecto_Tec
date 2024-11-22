@@ -12,6 +12,7 @@ public class EntradaInventario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "entrada_seq", sequenceName = "entrada_seq", allocationSize = 1)
     @Column(name = "id_entrada")
     private Integer id;
 

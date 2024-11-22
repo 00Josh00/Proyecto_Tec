@@ -12,6 +12,7 @@ public class Producto {
 
     @Id //primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY) //serial auto incremental
+    @SequenceGenerator(name = "producto_seq", sequenceName = "producto_seq", allocationSize = 1)
     @Column(name = "id_producto") // que el nombre de columna en la tabla sea idproducto
     private Integer id;
 
@@ -39,9 +40,7 @@ public class Producto {
     @Column(name="fecha_act")
     private LocalDateTime fechaActualizacion;
 
-
     private Integer stock;
-
 
 
     @PrePersist //se ejecuta en automatico antes de insertar, asigna la fecha del sistema al campo fecha de creacion
