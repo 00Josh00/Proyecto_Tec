@@ -3,7 +3,7 @@
             background-color: #fff;
         }
         .bg-navbar {
-            background-color: #07003c! important;
+            background-color: #07003c!important;
         }
         .text-primary{
           font-size: 40px;
@@ -95,7 +95,7 @@
         .form-control:focus {
             color: #212529;
             background-color: #fff;
-            border-color: transparent!important;
+            border-color: #ced4da!important;
             outline: 0;
             box-shadow: 0 0 0 .25rem rgb(13 110 253 / 0%)!important;
         }

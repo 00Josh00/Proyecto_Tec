@@ -29,7 +29,7 @@ public class ProductoController {
     }
 
     @GetMapping("/productos")
-    String getProductos(Model model, @PageableDefault(size = 9, sort = "nombre") Pageable pageable) {
+    String getProductos(Model model, @PageableDefault(size = 12, sort = "nombre") Pageable pageable) {
         Page<Producto> productos = productoRepository.findAll(pageable);
         model.addAttribute("productos", productos);
         return "lista-productos";

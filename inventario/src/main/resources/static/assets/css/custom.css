@@ -2,8 +2,8 @@
 Custom Css
 */
 .custom-img-size {
-  width: 412px;
-  height: 412px;
+  width: 380px;
+  height: 380px;
   object-fit: cover; /* Para asegurar que la imagen se ajuste sin deformarse */
 }
 .product-name {
