@@ -42,9 +42,15 @@
                     <a class="nav-link ul-elements" sec:authorize="hasRole('ROLE_ADMIN')"
                        href="/admin/productos">Admnistración</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link ul-elements" sec:authorize="hasRole('ROLE_ADMIN')"
-                       href="/admin/entradasInventario">Entrada - Inventario</a>
+                <li class="nav-item dropdown ul-elements">
+                    <a class="nav-link dropdown-toggle" sec:authorize="hasRole('ROLE_ADMIN')" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Inventario
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/admin/entradasInventario">Entrada</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="/admin/salidasInventario">Salida</a></li>
+                    </ul>
                 </li>
             </ul>
             <div sec:authorize="!isAuthenticated()">

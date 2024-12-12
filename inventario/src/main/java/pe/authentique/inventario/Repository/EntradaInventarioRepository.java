@@ -14,5 +14,4 @@ public interface EntradaInventarioRepository extends JpaRepository<EntradaInvent
     Page<EntradaInventario> findByProductoNombreContaining(String nombre, Pageable pageable);
 
     List<EntradaInventario> findByFechaCreacion(LocalDateTime fechaCreacion);
-
 }

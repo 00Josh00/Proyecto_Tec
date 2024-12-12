@@ -1,13 +1,18 @@
 package pe.authentique.inventario.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
-@Table(name = "salida_inventario") // Nombre personalizado para la tabla
+@Table(name = "salida_inventario")
 public class SalidaInventario {
 
     @Id
@@ -16,17 +21,33 @@ public class SalidaInventario {
     @Column(name = "id_salida")
     private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "id_producto", nullable = false)
-    private Producto producto;
-
     @NotNull
-    private Integer cantidad; // cantidad de salida
+    @ManyToOne
+    @JoinColumn(name = "id_cliente", referencedColumnName = "id_cliente")
+    private Cliente cliente;
 
-    private LocalDateTime fechaCreacion;
+    @Column(name = "fecha_salida", nullable = false)
+    private LocalDateTime fechaSalida;
+
+    @Setter
+    @Getter
+    @OneToMany(mappedBy = "salidaInventario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DetalleSalida> detalles = new ArrayList<>();
 
     @PrePersist
     void prePersist() {
-        fechaCreacion = LocalDateTime.now();
+        fechaSalida = LocalDateTime.now();
     }
+
+    // Métodos auxiliares para manejo de la relación
+    public void addDetalle(DetalleSalida detalle) {
+        detalles.add(detalle);
+        detalle.setSalidaInventario(this);
+    }
+
+    public void removeDetalle(DetalleSalida detalle) {
+        detalles.remove(detalle);
+        detalle.setSalidaInventario(null);
+    }
+
 }
