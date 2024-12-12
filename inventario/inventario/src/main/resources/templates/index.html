@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{master.html}"
+>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Inicio</title>
+
+    <div layout:fragment="styles">
+        <link th:href="@{/css/estilos.css}" rel="stylesheet">
+    </div>
+
+</head>
+<body>
+<div layout:fragment="contenido_dinamico">
+
+    <div class="banner">
+        <div class="overlay"></div>
+    </div>
+
+    <div class="container">
+        <div class="first-section">
+            <h3 class="short-font title-section">NEWS & INSPIRED</h3>
+            <h2 class="special-font description-section">Nos dedicamos a crear joyas y accesorios que reflejen la
+                verdadera esencia de quien los <br> lleva. </h2>
+            <a class="short-font link-section">DISCOVER NOW</a>
+        </div>
+    </div>
+
+    <div class="background-section">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h2 class="special-font description-sectionW">Aretes Elegantes</h2>
+                    <h3 class="short-font parr-section">Pendientes elegantes y sofisticados. Al usarlos, <br>aportas un
+                        toque de gracia y buen gusto</h3>
+                    <a href="" class="btn-sectionBK short-font">Comprar ahora</a>
+                </div>
+                <div class="col"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container second-section">
+        <div class="row">
+            <div class="col-3 col-section">
+                <h3 class="special-font description-section">Nuevos Ingresos</h3>
+                <h3 class="short-font parr-section-col">Desde elegantes diseños hasta increibles detalles que te
+                    cautivaran.</h3>
+                <a href="/productos" class="btn-section short-font">Ver todo</a>
+            </div>
+            <div class="col">
+                <div class="row">
+                    <div th:each="producto : ${ultimosProductos}" th:object="${producto}"
+                         class="col-md-4 col-lg-4 mb-3">
+
+                        <div class="shadow" style="margin-bottom: 22px;">
+                            <img th:src="@{/media/{rutaImagen}(rutaImagen=*{rutaImagen})}" class="card-img-top"
+                                 th:alt="*{nombre}"
+                                 style="height: 300px; object-fit: cover;">
+                        </div>
+                        <div style="text-align: left;"><a th:href="@{/productos/{id}(id=*{id})}"
+                                                          class="short-font parr-section-card">[[*{nombre}]]<br></a>
+                        </div>
+                        <div class="fw-bold short-font price-section" style="margin-top: 6px;">
+                            S/[[*{#numbers.formatDecimal(precio, 1,'COMMA',2,'POINT')}]]
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

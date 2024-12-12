@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{master.html}"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Administrar Productos</title>
+</head>
+<body>
+
+<div class="container mt-5" layout:fragment="contenido_dinamico">
+    <h3>Gestión de Productos</h3>
+
+    <div class="text-end">
+        <a href="/admin/productos/nuevo" class="btn btn-primary">Nuevo</a>
+    </div>
+
+    <form action="" class="my-3">
+        <div class="row">
+            <div class="col-md-6 col-lg-4">
+                <div class="input-group">
+                    <input type="search" name="nombre" class="form-control"
+                           placeholder="Buscar producto por nombre" th:value="${param.nombre}">
+                    <button class="btn btn-primary">Buscar</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th></th>
+            <th>NOMBRE</th>
+            <th>PRECIO</th>
+            <th>STOCK</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="producto : ${productos}" th:object="${producto}">
+            <td>
+                <a th:href="@{/media/{rutaImagen}(rutaImagen=*{rutaImagen})}" data-fancybox>
+                    <img th:src="@{/media/{rutaImagen}(rutaImagen=*{rutaImagen})}"
+                         th:if="*{rutaImagen ne null}"
+                         alt=""
+                         width="120"
+                         class="img-thumbnail">
+                </a>
+            </td>
+
+            <td>
+                <div th:text="*{nombre}" class="fw-bold"></div>
+                <p class="small" th:text="*{descripcion}"></p>
+            </td>
+
+            <td>
+                S/.[[*{#numbers.formatDecimal(precio, 1, 'COMMA', 2, 'POINT')}]]
+            </td>
+            <td>
+                <div th:text="*{stock}"></div>
+            </td>
+            <td class="text-end">
+                <div class="btn-group btn-group-sm">
+                    <a th:href="@{/admin/productos/editar/{x}(x=*{id})}" class="btn btn-primary" title="Editar">
+                        <i class="fa fa-edit"></i>
+                    </a>
+                    <a href="#" onclick="eliminarProducto(this)" class="btn btn-danger" title="Eliminar">
+                        <i class="fa fa-trash"></i>
+                    </a>
+                    <form th:action="@{/admin/productos/eliminar/{id}(id=*{id})}" method="post" class="d-none"></form>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="d-flex justify-content-center">
+        <nav>
+            <div sd:pagination-summary="">info</div>
+            <ul class="pagination mt-3" sd:pagination="full">
+            </ul>
+        </nav>
+    </div>
+
+</div>
+
+<div layout:fragment="scripts">
+    <script>
+        function eliminarProducto(elemento)
+        {
+            var ok = confirm('¿Estas seguro de eliminar el producto?');
+            if(ok)
+            {
+                elemento.nextElementSibling.submit();
+            }
+        }
+    </script>
+</div>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{master.html}">
+<head>
+    <link th:href="@{/css/estilos.css}" rel="stylesheet">
+    <link th:href="@{/assets/css/custom.css}" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div layout:fragment="contenido_dinamico">
+    <div class="banner-shop">
+        <div class="container">
+            <h1 class="title-shop">Tienda</h1>
+            <nav style="--bs-breadcrumb-divider: '>';display: flex;justify-content: center;" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/" style="color: #000;">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page" style="color: #000;">Tienda</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <div class="container-footer mt-5 py-5">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="row">
+                    <div th:each="producto : ${productos}" th:object="${producto}" class="col-md-3 mb-3">
+                        <div class="card mb-3 product-wap rounded-0" style="display: flex; flex-wrap: wrap; flex-direction: row; justify-content: center; border-color: transparent;">
+                            <div class="card rounded-0">
+                                <img th:src="@{/media/{rutaImagen}(rutaImagen=*{rutaImagen})}"
+                                     class="card-img rounded-0 img-fluid custom-img-size" th:alt="*{nombre}">
+                            </div>
+                            <div class="card-body">
+                                <a th:href="@{/productos/{id}(id=*{id})}" class="short-font parr-section-card">
+                                    [[*{nombre}]]
+                                </a>
+                                <ul class="w-100 list-unstyled d-flex justify-content-between mb-0 short-font parr-section-card">
+                                    <li></li>
+                                </ul>
+                                <p class="fw-bold short-font price-section" style="text-align: center;">
+                                    S/[[*{#numbers.formatDecimal(precio,1,'COMMA',2,'POINT')}]]</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paginación -->
+                <div class="row">
+                    <ul class="pagination pagination-lg justify-content-center">
+                        <li th:each="i : ${#numbers.sequence(0, productos.totalPages - 1)}"
+                            th:classappend="${productos.number == i} ? 'page-item active' : 'page-item'">
+                            <a th:href="@{/productos(page=${i})}"
+                               class="page-link rounded-0 mr-3 border-top-0 border-left-0 text-dark"
+                               style="border: none;"
+                               th:text="${i + 1}"></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

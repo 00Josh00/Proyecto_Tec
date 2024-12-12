@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{master.html}"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Producto</title>
+</head>
+<body>
+<div class="container mt-5" layout:fragment="contenido_dinamico">
+    <div class="row justify-content-center">
+        <div class="col-lg-4 col-md-6 mt-5 mb-5">
+            <h1>Editar Producto</h1>
+            <form th:action="@{''}" th:object="${producto}" method="post" enctype="multipart/form-data">
+                <div class="mb-2">
+                    <label>Título</label>
+                    <input type="text" id="nombre" name="nombre" c
+                           th:field="*{nombre}" class="form-control" th:errorClass="is-invalid">
+                    <div th:errors="*{nombre}" th:if="${#fields.hasErrors('nombre')}" class="invalid-feedback">
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <label>Descripción</label>
+                    <textarea name="descripcion" id="descripcion" rows="3"
+                              th:field="*{descripcion}" class="form-control" th:errorClass="is-invalid"></textarea>
+                    <div th:errors="*{descripcion}" th:if="${#fields.hasErrors('descripcion')}"
+                         class="invalid-feedback">
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <label>Complementos</label>
+                    <textarea name="complemento" id="complemento" rows="2"
+                              th:field="*{complemento}" class="form-control" th:errorClass="is-invalid"></textarea>
+                    <div th:errors="*{complemento}" th:if="${#fields.hasErrors('complemento')}"
+                         class="invalid-feedback">
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <label>Precio</label>
+                    <input type="number" id="precio" name="precio" step="0.01"
+                           th:field="*{precio}" class="form-control" th:errorClass="is-invalid">
+                    <div th:errors="*{precio}" th:if="${#fields.hasErrors('precio')}" class="invalid-feedback">
+                    </div>
+                </div>
+
+                <div class="mb-2">
+                    <label>Imagen</label>
+                    <input type="file" id="imagen" name="imagen" accept="image/*"
+                           th:field="*{imagen}" class="form-control" th:errorClass="is-invalid">
+                    <div th:errors="*{imagen}" th:if="${#fields.hasErrors('imagen')}" class="invalid-feedback">
+                    </div>
+                </div>
+
+                <div class="text-end mt-3">
+                    <button class="btn btn-primary">Guardar</button>
+                    <a href="/admin/productos" class="btn btn-light">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

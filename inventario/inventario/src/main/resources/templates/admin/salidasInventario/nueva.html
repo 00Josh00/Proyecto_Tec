@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{master.html}">
+<head>
+  <meta charset="UTF-8">
+  <title>Nueva Entrada de Inventario</title>
+</head>
+<body>
+<div class="container mt-5" layout:fragment="contenido_dinamico">
+
+  <div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8 mt-5 mb-5">
+      <h1>Nueva Salida</h1>
+      <form th:action="@{/admin/salidasInventario/nueva}" th:object="${salidaInventario}" method="post">
+
+      <!-- Selección de Cliente -->
+        <div class="mb-3">
+          <label>Cliente</label>
+          <select th:field="*{cliente.id}" class="form-control" th:errorClass="is-invalid">
+            <option value="">Seleccionar cliente</option>
+            <option th:each="cliente : ${clientes}" th:value="${cliente.id}" th:text="${cliente.nombre}"></option>
+          </select>
+          <div th:errors="*{cliente}" th:if="${#fields.hasErrors('cliente')}" class="invalid-feedback"></div>
+        </div>
+
+        <!-- Selección de Productos -->
+        <div class="mb-3">
+          <label>Productos</label>
+          <div th:each="producto : ${productos}" class="form-check">
+            <!-- Checkbox para seleccionar el producto -->
+            <input type="checkbox" th:field="*{detalles[__${producto.id}__].producto.id}" th:value="${producto.id}" class="form-check-input">
+            <label th:for="*{detalles[__${producto.id}__].producto.id}" class="form-check-label">
+              <span th:text="${producto.nombre}"></span>
+            </label>
+
+            <!-- Campo para ingresar la cantidad -->
+            <input type="number" th:field="*{detalles[__${producto.id}__].cantidad}" class="form-control mt-1"
+                   placeholder="Cantidad" min="1">
+          </div>
+        </div>
+
+        <div class="text-end mt-3">
+          <button class="btn btn-primary">Registrar Salida</button>
+          <a href="/admin/salidasInventario" class="btn btn-light">Cancelar</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+</html>
+

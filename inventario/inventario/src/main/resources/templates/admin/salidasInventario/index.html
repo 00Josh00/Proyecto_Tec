@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{master.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Administrar Salidas de Inventario</title>
+</head>
+<body>
+
+<div class="container mt-5" layout:fragment="contenido_dinamico">
+    <h3>Gestión de Salidas de Inventario</h3>
+
+    <div class="text-end">
+        <a href="/admin/salidasInventario/nueva" class="btn btn-primary">Nueva Salida</a>
+    </div>
+
+    <form action="" class="my-3">
+        <div class="row">
+            <div class="col-md-6 col-lg-4">
+                <div class="input-group">
+                    <input type="search" name="clienteNombre" class="form-control"
+                           placeholder="Buscar salida por nombre de cliente" th:value="${param.clienteNombre}">
+                    <button class="btn btn-primary">Buscar</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>CLIENTE</th>
+            <th>PRODUCTOS</th>
+            <th>FECHA DE SALIDA</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="salida : ${salidas}" th:object="${salida}">
+            <td>
+                <div th:text="*{cliente.nombre}" class="fw-bold"></div>
+                <p class="small" th:text="*{cliente.email}"></p>
+            </td>
+            <td>
+                <ul>
+                    <li th:each="detalle : ${salida.detalles}">
+                        <span th:text="${detalle.producto.nombre}"></span> -
+                        <span th:text="${detalle.cantidad}"></span> unidades
+                    </li>
+                </ul>
+            </td>
+            <td>
+                [[*{#temporals.format(fechaSalida, 'dd/MM/yyyy hh:mm a')}]]
+            </td>
+            <td class="text-end">
+                <div class="btn-group btn-group-sm">
+                    <a th:href="@{/salidas/detalle/{x}(x=*{id})}" class="btn btn-info" title="Ver Detalles">
+                        <i class="fa fa-eye"></i>
+                    </a>
+                    <a href="#" onclick="eliminarSalida(this)" class="btn btn-danger" title="Eliminar">
+                        <i class="fa fa-trash"></i>
+                    </a>
+                    <form th:action="@{/salidas/eliminar/{id}(id=*{id})}" method="post" class="d-none"></form>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="d-flex justify-content-center">
+        <nav>
+            <div sd:pagination-summary="">info</div>
+            <ul class="pagination mt-3" sd:pagination="full">
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<div layout:fragment="scripts">
+    <script>
+        function eliminarSalida(elemento) {
+            var ok = confirm('¿Estás seguro de eliminar esta salida?');
+            if (ok) {
+                elemento.nextElementSibling.submit();
+            }
+        }
+    </script>
+</div>
+
+</body>
+</html>
