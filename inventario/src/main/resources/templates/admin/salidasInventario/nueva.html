@@ -4,48 +4,65 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{master.html}">
 <head>
+  <link th:href="@{/css/estilos.css}" rel="stylesheet">
   <meta charset="UTF-8">
-  <title>Nueva Entrada de Inventario</title>
+  <title>Nueva Salida de Inventario</title>
 </head>
 <body>
-<div class="container mt-5" layout:fragment="contenido_dinamico">
+<div layout:fragment="contenido_dinamico">
+  <div class="banner-nuevo">
+    <div class="container">
+      <h1 class="title-nuevo">Nueva Salida</h1>
+      <nav style="--bs-breadcrumb-divider: '>';display: flex;justify-content: center; color: #fff;" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/" style="color: #fff;">Home</a></li>
+          <li class="breadcrumb-item"><a href="/admin/salidasInventario" style="color: #fff;">Salidas</a></li>
+          <li class="breadcrumb-item active" aria-current="page" style="color: #fff;">Nueva</li>
+        </ol>
+      </nav>
+    </div>
+  </div>
 
-  <div class="row justify-content-center">
-    <div class="col-lg-6 col-md-8 mt-5 mb-5">
-      <h1>Nueva Salida</h1>
-      <form th:action="@{/admin/salidasInventario/nueva}" th:object="${salidaInventario}" method="post">
+  <div class="container py-4 my-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-6 col-md-8">
+        <h1 class="short-font pb-3">Nueva Salida</h1>
+        <form th:action="@{/admin/salidasInventario/nueva}" th:object="${salidaInventario}" method="post">
 
-      <!-- Selección de Cliente -->
-        <div class="mb-3">
-          <label>Cliente</label>
-          <select th:field="*{cliente.id}" class="form-control" th:errorClass="is-invalid">
-            <option value="">Seleccionar cliente</option>
-            <option th:each="cliente : ${clientes}" th:value="${cliente.id}" th:text="${cliente.nombre}"></option>
-          </select>
-          <div th:errors="*{cliente}" th:if="${#fields.hasErrors('cliente')}" class="invalid-feedback"></div>
-        </div>
-
-        <!-- Selección de Productos -->
-        <div class="mb-3">
-          <label>Productos</label>
-          <div th:each="producto : ${productos}" class="form-check">
-            <!-- Checkbox para seleccionar el producto -->
-            <input type="checkbox" th:field="*{detalles[__${producto.id}__].producto.id}" th:value="${producto.id}" class="form-check-input">
-            <label th:for="*{detalles[__${producto.id}__].producto.id}" class="form-check-label">
-              <span th:text="${producto.nombre}"></span>
-            </label>
-
-            <!-- Campo para ingresar la cantidad -->
-            <input type="number" th:field="*{detalles[__${producto.id}__].cantidad}" class="form-control mt-1"
-                   placeholder="Cantidad" min="1">
+        <!-- Selección de Cliente -->
+          <div class="mb-3">
+            <select th:field="*{cliente.id}" class="form-control frm-personalized" th:errorClass="is-invalid">
+              <option value="">Seleccionar cliente</option>
+              <option th:each="cliente : ${clientes}" th:value="${cliente.id}" th:text="${cliente.nombre}"></option>
+            </select>
+            <div th:errors="*{cliente}" th:if="${#fields.hasErrors('cliente')}" class="invalid-feedback"></div>
           </div>
-        </div>
 
-        <div class="text-end mt-3">
-          <button class="btn btn-primary">Registrar Salida</button>
-          <a href="/admin/salidasInventario" class="btn btn-light">Cancelar</a>
-        </div>
-      </form>
+          <!-- Selección de Productos -->
+          <div class="mb-3">
+            <div class="row">
+              <div th:each="producto : ${productos}" class="col-md-4 mb-4 d-flex" style="display: ruby;">
+                <!-- Tarjeta o contenedor del producto -->
+                <div class="card p-3 w-100 h-100">
+                    <!-- Checkbox para seleccionar el producto -->
+                    <input type="checkbox" th:field="*{detalles[__${producto.id}__].producto.id}" th:value="${producto.id}" class="form-check-input">
+                    <label th:for="*{detalles[__${producto.id}__].producto.id}" class="form-check-label">
+                      <span th:text="${producto.nombre}"></span>
+                    </label>
+
+                    <!-- Campo para ingresar la cantidad -->
+                    <input type="number" th:field="*{detalles[__${producto.id}__].cantidad}" class="form-control mt-1 frm-personalized"
+                           placeholder="Cantidad" min="1">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="text-end mt-3">
+              <button class="btn btn-primary boton-login">Registrar</button>
+              <a href="/admin/salidasInventario" class="btn btn-primary boton-register">Cancelar</a>
+            </div>
+        </form>
+      </div>
     </div>
   </div>
 </div>

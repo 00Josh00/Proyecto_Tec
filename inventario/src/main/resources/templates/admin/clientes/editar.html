@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{master.html}">
+<head>
+    <link th:href="@{/css/estilos.css}" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Editar Cliente</title>
+</head>
+<body>
+<div layout:fragment="contenido_dinamico">
+    <div class="banner-shop">
+        <div class="container">
+            <h1 class="title-shop">Editar Cliente</h1>
+            <nav style="--bs-breadcrumb-divider: '>'; display: flex; justify-content: center;" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/" style="color: #000;">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/admin/clientes" style="color: #000;">Clientes</a></li>
+                    <li class="breadcrumb-item active" aria-current="page" style="color: #000;">Editar Cliente</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <div class="container mt-5 mb-5">
+        <h3 class="short-font">Editar Información del Cliente</h3>
+        <form th:action="@{/admin/clientes/editar}" th:object="${cliente}" method="post" class="mt-4">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="nombre" class="form-label">Nombre</label>
+                    <input type="text" id="nombre" name="nombre" th:field="*{nombre}" class="form-control" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="apellidos" class="form-label">Apellidos</label>
+                    <input type="text" id="apellidos" name="apellidos" th:field="*{apellidos}" class="form-control"
+                           required>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" id="email" name="email" th:field="*{email}" class="form-control">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="telefono" class="form-label">Teléfono</label>
+                    <input type="text" id="telefono" name="telefono" th:field="*{telefono}" class="form-control">
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="direccion" class="form-label">Dirección</label>
+                <input type="text" id="direccion" name="direccion" th:field="*{direccion}" class="form-control">
+            </div>
+
+            <div class="text-end">
+                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                <a href="/admin/clientes" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

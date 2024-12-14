@@ -127,3 +127,14 @@
             margin-top: 180px;
             margin-bottom: 150px;
         }
+        .ul-down {
+            color: #000;
+            position: relative;
+            margin: 0 15px;
+            font-size: 13px !important;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .ul-down:hover {
+            color: #c19417;
+        }

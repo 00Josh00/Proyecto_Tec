@@ -19,7 +19,7 @@ public class SalidaInventario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @SequenceGenerator(name = "salida_seq", sequenceName = "salida_seq", allocationSize = 1)
     @Column(name = "id_salida")
-    private Integer id;
+    private Long id;
 
     @NotNull
     @ManyToOne

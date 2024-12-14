@@ -74,6 +74,46 @@ public class AdminEntradaInventarioController {
         return "redirect:/admin/entradasInventario";
     }
 
+    @GetMapping("/editar/{id}")
+    public String mostrarFormularioEditar(@PathVariable Integer id, Model model) {
+        EntradaInventario entradaInventario = entradaInventarioRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Entrada de inventario no encontrada: " + id));
+
+        List<Producto> productos = productoRepository.findAll();
+        productos.sort(Comparator.comparing(Producto::getNombre));
+
+        model.addAttribute("entradaInventario", entradaInventario);
+        model.addAttribute("productos", productos);
+        return "admin/entradasInventario/editar";
+    }
+
+
+    @PostMapping("/editar/{id}")
+    public String actualizar(@PathVariable Integer id,
+                             @Validated EntradaInventario entradaInventario,
+                             BindingResult br,
+                             Model model,
+                             RedirectAttributes ra) {
+        if (br.hasErrors()) {
+            List<Producto> productos = productoRepository.findAll();
+            model.addAttribute("productos", productos);
+            model.addAttribute("entradaInventario", entradaInventario);
+            return "admin/entradasInventario/editar";
+        }
+
+        EntradaInventario entradaExistente = entradaInventarioRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Entrada de inventario no encontrada: " + id));
+
+        // Actualizar campos
+        entradaExistente.setProducto(entradaInventario.getProducto());
+        entradaExistente.setCantidad(entradaInventario.getCantidad());
+        entradaInventarioRepository.save(entradaExistente);
+
+        ra.addFlashAttribute("msgExito", "La entrada de inventario se ha actualizado con éxito!");
+        return "redirect:/admin/entradasInventario";
+    }
+
+
     @PostMapping("/eliminar/{id}")
     String eliminar(@PathVariable Integer id, RedirectAttributes ra) {
         //1. eliminamos el curso por su ID, utilizando el repository

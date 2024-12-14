@@ -10,7 +10,7 @@ import pe.authentique.inventario.model.SalidaInventario;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public interface SalidaInventarioRepository extends JpaRepository<SalidaInventario, Integer> {
+public interface SalidaInventarioRepository extends JpaRepository<SalidaInventario, Long> {
 
     // Ejemplo de consulta personalizada: buscar salidas entre dos fechas
     List<SalidaInventario> findByFechaSalidaBetween(LocalDateTime startDate, LocalDateTime endDate);
@@ -19,6 +19,6 @@ public interface SalidaInventarioRepository extends JpaRepository<SalidaInventar
 
     // Puedes agregar más métodos personalizados según sea necesario
     @Query("SELECT s FROM SalidaInventario s LEFT JOIN FETCH s.detalles WHERE s.id = :id")
-    SalidaInventario findByIdWithDetalles(@Param("id") Integer id);
+    SalidaInventario findByIdWithDetalles(@Param("id") Long id);
 }
 

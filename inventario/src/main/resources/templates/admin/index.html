@@ -5,87 +5,108 @@
       layout:decorate="~{master.html}"
 >
 <head>
+    <link th:href="@{/css/estilos.css}" rel="stylesheet">
     <meta charset="UTF-8">
     <title>Administrar Productos</title>
 </head>
 <body>
 
-<div class="container mt-5" layout:fragment="contenido_dinamico">
-    <h3>Gestión de Productos</h3>
-
-    <div class="text-end">
-        <a href="/admin/productos/nuevo" class="btn btn-primary">Nuevo</a>
+<div layout:fragment="contenido_dinamico">
+    <div class="banner-shop">
+        <div class="container">
+            <h1 class="title-shop">Administración</h1>
+            <nav style="--bs-breadcrumb-divider: '>';display: flex;justify-content: center;" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/" style="color: #000;">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page" style="color: #000;">Administración</li>
+                </ol>
+            </nav>
+        </div>
     </div>
+    <div class="container mt-5 my-5">
+        <h3 class="short-font">Gestión de Productos</h3>
 
-    <form action="" class="my-3">
-        <div class="row">
-            <div class="col-md-6 col-lg-4">
-                <div class="input-group">
-                    <input type="search" name="nombre" class="form-control"
-                           placeholder="Buscar producto por nombre" th:value="${param.nombre}">
-                    <button class="btn btn-primary">Buscar</button>
+        <div class="text-end" style="display: flex; justify-content: flex-end;">
+            <a href="/admin/productos/nuevo" class="btn-section short-font">Nuevo</a>
+        </div>
+
+        <form action="" class="my-3">
+            <div class="row">
+                <div class="col-md-6 col-lg-4">
+                    <div class="input-group">
+                        <input type="search" name="nombre" class="form-control frm-personalized"
+                               style="margin: 0;"
+                               placeholder="Buscar producto por nombre" th:value="${param.nombre}">
+                        <button class="btn btn-primary"
+                                style="border-radius: 0; background-color: #000; border: 0;">Buscar</button>
+                    </div>
                 </div>
             </div>
+        </form>
+
+
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th></th>
+                <th>NOMBRE</th>
+                <th>PRECIO</th>
+                <th>STOCK</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="producto : ${productos}" th:object="${producto}">
+                <td>
+                    <a th:href="@{/media/{rutaImagen}(rutaImagen=*{rutaImagen})}" data-fancybox>
+                        <img th:src="@{/media/{rutaImagen}(rutaImagen=*{rutaImagen})}"
+                             th:if="*{rutaImagen ne null}"
+                             alt=""
+                             width="120"
+                             class="img-thumbnail">
+                    </a>
+                </td>
+
+                <td>
+                    <div th:text="*{nombre}" class="fw-bold"></div>
+                    <p class="small" th:text="*{descripcion}"></p>
+                </td>
+
+                <td>
+                    S/.[[*{#numbers.formatDecimal(precio, 1, 'COMMA', 2, 'POINT')}]]
+                </td>
+                <td>
+                    <div th:text="*{stock}"></div>
+                </td>
+                <td class="text-end">
+                    <div class="btn-group btn-group-sm">
+                        <a th:href="@{/admin/productos/editar/{x}(x=*{id})}" class="btn btn-primary" title="Editar">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                        <a href="#" onclick="eliminarProducto(this)" class="btn btn-danger" title="Eliminar">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                        <form th:action="@{/admin/productos/eliminar/{id}(id=*{id})}" method="post" class="d-none"></form>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="d-flex justify-content-center">
+            <nav>
+                <ul class="pagination pagination-lg justify-content-center">
+                    <li th:each="i : ${#numbers.sequence(0, productos.totalPages - 1)}"
+                        th:classappend="${productos.number == i} ? 'page-item active' : 'page-item'">
+                        <a th:href="@{/admin/productos(page=${i})}"
+                           class="page-link rounded-0 mr-3 border-top-0 border-left-0 text-dark"
+                           style="border: none;"
+                           th:text="${i + 1}"></a>
+                    </li>
+                </ul>
+            </nav>
         </div>
-    </form>
-
-
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th></th>
-            <th>NOMBRE</th>
-            <th>PRECIO</th>
-            <th>STOCK</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="producto : ${productos}" th:object="${producto}">
-            <td>
-                <a th:href="@{/media/{rutaImagen}(rutaImagen=*{rutaImagen})}" data-fancybox>
-                    <img th:src="@{/media/{rutaImagen}(rutaImagen=*{rutaImagen})}"
-                         th:if="*{rutaImagen ne null}"
-                         alt=""
-                         width="120"
-                         class="img-thumbnail">
-                </a>
-            </td>
-
-            <td>
-                <div th:text="*{nombre}" class="fw-bold"></div>
-                <p class="small" th:text="*{descripcion}"></p>
-            </td>
-
-            <td>
-                S/.[[*{#numbers.formatDecimal(precio, 1, 'COMMA', 2, 'POINT')}]]
-            </td>
-            <td>
-                <div th:text="*{stock}"></div>
-            </td>
-            <td class="text-end">
-                <div class="btn-group btn-group-sm">
-                    <a th:href="@{/admin/productos/editar/{x}(x=*{id})}" class="btn btn-primary" title="Editar">
-                        <i class="fa fa-edit"></i>
-                    </a>
-                    <a href="#" onclick="eliminarProducto(this)" class="btn btn-danger" title="Eliminar">
-                        <i class="fa fa-trash"></i>
-                    </a>
-                    <form th:action="@{/admin/productos/eliminar/{id}(id=*{id})}" method="post" class="d-none"></form>
-                </div>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-
-    <div class="d-flex justify-content-center">
-        <nav>
-            <div sd:pagination-summary="">info</div>
-            <ul class="pagination mt-3" sd:pagination="full">
-            </ul>
-        </nav>
     </div>
-
 </div>
 
 <div layout:fragment="scripts">

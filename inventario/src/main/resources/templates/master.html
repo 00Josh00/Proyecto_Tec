@@ -38,18 +38,25 @@
                                         aria-current="page" href="/">Inicio</a></li>
                 <li class="nav-item"><a class="nav-link ul-elements" sec:authorize="isAuthenticated()"
                                         href="/productos">Productos</a></li>
-                <li class="nav-item">
-                    <a class="nav-link ul-elements" sec:authorize="hasRole('ROLE_ADMIN')"
-                       href="/admin/productos">Admnistración</a>
+                <li class="nav-item dropdown ul-elements">
+                    <a class="nav-link dropdown-toggle" sec:authorize="hasRole('ROLE_ADMIN')" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Gestión
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="short-font nav-link ul-down" href="/admin/clientes">Clientes</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="short-font nav-link ul-down" href="/admin/productos">Productos</a></li>
+                    </ul>
                 </li>
+
                 <li class="nav-item dropdown ul-elements">
                     <a class="nav-link dropdown-toggle" sec:authorize="hasRole('ROLE_ADMIN')" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Inventario
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/admin/entradasInventario">Entrada</a></li>
+                        <li><a class="short-font nav-link ul-down" href="/admin/entradasInventario">Entrada</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="/admin/salidasInventario">Salida</a></li>
+                        <li><a class="short-font nav-link ul-down" href="/admin/salidasInventario">Salida</a></li>
                     </ul>
                 </li>
             </ul>

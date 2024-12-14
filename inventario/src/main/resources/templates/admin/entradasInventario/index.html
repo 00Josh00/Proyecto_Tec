@@ -4,74 +4,98 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{master.html}">
 <head>
+    <link th:href="@{/css/estilos.css}" rel="stylesheet">
     <meta charset="UTF-8">
     <title>Administrar Entradas de Inventario</title>
 </head>
 <body>
 
-<div class="container mt-5" layout:fragment="contenido_dinamico">
-    <h3>Gestión de Entradas de Inventario</h3>
-
-    <div class="text-end">
-        <a href="/admin/entradasInventario/nueva" class="btn btn-primary">Nueva Entrada</a>
+<div layout:fragment="contenido_dinamico">
+    <div class="banner-shop">
+        <div class="container">
+            <h1 class="title-shop">Entrada</h1>
+            <nav style="--bs-breadcrumb-divider: '>';display: flex;justify-content: center;" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/" style="color: #000;">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page" style="color: #000;">Inventario</li>
+                    <li class="breadcrumb-item active" aria-current="page" style="color: #000;">Entrada</li>
+                </ol>
+            </nav>
+        </div>
     </div>
 
-    <form action="" class="my-3">
-        <div class="row">
-            <div class="col-md-6 col-lg-4">
-                <div class="input-group">
-                    <input type="search" name="productoNombre" class="form-control"
-                           placeholder="Buscar entrada por nombre de producto" th:value="${param.productoNombre}">
-                    <button class="btn btn-primary">Buscar</button>
+    <div class="container mt-5 my-5">
+        <h3 class="short-font">Gestión de Entradas de Inventario</h3>
+
+        <div class="text-end" style="display: flex; justify-content: flex-end;">
+            <a href="/admin/entradasInventario/nueva" class="btn-section short-font">Nueva</a>
+        </div>
+
+        <form action="" class="my-3">
+            <div class="row">
+                <div class="col-md-6 col-lg-4">
+                    <div class="input-group">
+                        <input type="search" name="productoNombre" class="form-control frm-personalized"
+                               style="margin: 0;"
+                               placeholder="Buscar entrada por nombre de producto" th:value="${param.productoNombre}">
+                        <button class="btn btn-primary"
+                                style="border-radius: 0; background-color: #000; border: 0;">Buscar</button>
+                    </div>
                 </div>
             </div>
+        </form>
+
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>PRODUCTO</th>
+                <th>CANTIDAD</th>
+                <th>FECHA DE CREACIÓN</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="entrada : ${entradas}" th:object="${entrada}">
+                <td>
+                    <div th:text="*{producto.nombre}" class="fw-bold"></div>
+                    <p class="small" th:text="*{producto.descripcion}"></p>
+                </td>
+                <td>
+                    <div th:text="*{cantidad}"></div>
+                </td>
+                <td>
+                    [[*{#temporals.format(fechaCreacion, 'dd/MM/yyyy hh:mm a')}]]
+                </td>
+                <td class="text-end">
+                    <div class="btn-group btn-group-sm">
+                        <a th:href="@{/admin/entradasInventario/editar/{x}(x=*{id})}" class="btn btn-primary"
+                           title="Editar">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                        <a href="#" onclick="eliminarEntrada(this)" class="btn btn-danger" title="Eliminar">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                        <form th:action="@{/admin/entradasInventario/eliminar/{id}(id=*{id})}" method="post"
+                              class="d-none"></form>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="d-flex justify-content-center">
+            <nav>
+                <ul class="pagination pagination-lg justify-content-center">
+                    <li th:each="i : ${#numbers.sequence(0, entradas.totalPages - 1)}"
+                        th:classappend="${entradas.number == i} ? 'page-item active' : 'page-item'">
+                        <a th:href="@{/admin/entradasInventario(page=${i})}"
+                           class="page-link rounded-0 mr-3 border-top-0 border-left-0 text-dark"
+                           style="border: none;"
+                           th:text="${i + 1}"></a>
+                    </li>
+                </ul>
+            </nav>
         </div>
-    </form>
-
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th>PRODUCTO</th>
-            <th>CANTIDAD</th>
-            <th>FECHA DE CREACIÓN</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="entrada : ${entradas}" th:object="${entrada}">
-            <td>
-                <div th:text="*{producto.nombre}" class="fw-bold"></div>
-                <p class="small" th:text="*{producto.descripcion}"></p>
-            </td>
-            <td>
-                <div th:text="*{cantidad}"></div>
-            </td>
-            <td>
-                [[*{#temporals.format(fechaCreacion, 'dd/MM/yyyy hh:mm a')}]]
-            </td>
-            <td class="text-end">
-                <div class="btn-group btn-group-sm">
-                    <a th:href="@{/admin/entradasInventario/editar/{x}(x=*{id})}" class="btn btn-primary"
-                       title="Editar">
-                        <i class="fa fa-edit"></i>
-                    </a>
-                    <a href="#" onclick="eliminarEntrada(this)" class="btn btn-danger" title="Eliminar">
-                        <i class="fa fa-trash"></i>
-                    </a>
-                    <form th:action="@{/admin/entradasInventario/eliminar/{id}(id=*{id})}" method="post"
-                          class="d-none"></form>
-                </div>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-
-    <div class="d-flex justify-content-center">
-        <nav>
-            <div sd:pagination-summary="">info</div>
-            <ul class="pagination mt-3" sd:pagination="full">
-            </ul>
-        </nav>
     </div>
 </div>
 

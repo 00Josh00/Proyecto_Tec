@@ -147,18 +147,31 @@
         font-family: "Jost", sans-serif;
         color: #000;
       }
-      .banner-shop{
-        background-image: url(/banner-tienda.jpg);
+      .banner-nuevo{
+        background-image: url(/banner-nuevo.jpg);
         padding: 90px 0px;
         margin-top: 75px;
         background-size: cover;
         background-position: 50%;
         background-repeat: no-repeat;
       }
+      .banner-shop{
+          background-image: url(/banner-tienda.jpg);
+          padding: 90px 0px;
+          margin-top: 75px;
+          background-size: cover;
+          background-position: 50%;
+          background-repeat: no-repeat;
+        }
       .title-shop{
         font-family: "Delius Swash Caps", cursive;
         font-size: 38px;
       }
+      .title-nuevo{
+          font-family: "Delius Swash Caps", cursive;
+          font-size: 38px;
+          color: #fff;
+        }
       .active>.page-link, .page-link.active{
         border: none;
         background-color: transparent;
